@@ -34,12 +34,43 @@ fn main() {
         if has_zero || !monotonic || large_diff {
             continue;
         } else {
-            println!("Valid line: {:?}", numbers);
             num_safe += 1;
         }
     }
 
     // First star answer
+    println!(
+        "Number of safe routes: {} in {} ns",
+        num_safe,
+        start_time.elapsed().as_nanos()
+    );
+
+    // --- Part Two ---
+
+    // Validate the data
+    // grr this is (mostly) a copy-paste of the above code
+    let mut num_safe: usize = 0;
+    for numbers in parsed_lines.iter() {
+        let diffs: Vec<i32> = numbers.windows(2).map(|pair| pair[1] - pair[0]).collect();
+
+        let mut non_monotonic_count = 0;
+        for window in diffs.windows(2) {
+            if (window[0] > 0 && window[1] < 0) || (window[0] < 0 && window[1] > 0) {
+                non_monotonic_count += 1;
+            }
+        }
+
+        let zero_count = diffs.iter().filter(|&&diff| diff == 0).count();
+        let num_large_diff = diffs.iter().filter(|&diff| diff.abs() > 3).count();
+
+        if (zero_count + non_monotonic_count + num_large_diff) > 1 {
+            continue;
+        } else {
+            num_safe += 1;
+        }
+    }
+
+    // Second star answer
     println!(
         "Number of safe routes: {} in {} ns",
         num_safe,
