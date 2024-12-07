@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 use std::time::Instant;
@@ -46,6 +47,37 @@ fn main() {
     println!(
         "Calculated total distance: {} in {} ns",
         total_distance,
+        start_time.elapsed().as_nanos()
+    );
+
+    // --- Part Two ---
+
+    // Restart the timer
+    let start_time = Instant::now();
+
+    // Initialize the HashMap with all the numbers in the first column
+    let mut match_occurrences: HashMap<i32, usize> = HashMap::new();
+    for &(num1, _) in &secret_locations {
+        match_occurrences.insert(num1, 0);
+    }
+
+    // Get the number of occurrences of each number in the second column
+    for &(_, num2) in &secret_locations {
+        if let Some(count) = match_occurrences.get_mut(&num2) {
+            *count += 1;
+        }
+    }
+
+    // Calculate the similarity score
+    let mut similarity_score: i32 = 0;
+    for (num1, count) in &match_occurrences {
+        similarity_score += (*count as i32) * num1;
+    }
+
+    // Second star answer
+    println!(
+        "Calculated similarity score: {} in {} ns",
+        similarity_score,
         start_time.elapsed().as_nanos()
     );
 }
