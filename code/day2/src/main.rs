@@ -47,6 +47,9 @@ fn main() {
 
     // --- Part Two ---
 
+    // Restart the timer
+    let start_time = Instant::now();
+
     // Validate the data
     // grr this is (mostly) a copy-paste of the above code
     let mut num_safe: usize = 0;
