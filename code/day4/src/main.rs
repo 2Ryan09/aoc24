@@ -25,19 +25,19 @@ fn main() {
     println!("X-MAS found {} times", count);
 }
 
-fn find_word_in_grid(grid: &Vec<Vec<char>>, word: &str, x_only: bool) -> usize {
+fn find_word_in_grid(grid: &[Vec<char>], word: &str, x_only: bool) -> usize {
     let cardinal_directions = vec![
         (0, 1),  // right
         (0, -1), // left
         (1, 0),  // down
-        (-1, 0)  // up
+        (-1, 0), // up
     ];
 
     let diagonal_directions = vec![
-        (1, 1),  // down-right
-        (1, -1), // down-left
-        (-1, 1), // up-right
-        (-1, -1) // up-left
+        (1, 1),   // down-right
+        (1, -1),  // down-left
+        (-1, 1),  // up-right
+        (-1, -1), // up-left
     ];
 
     let directions: Vec<(isize, isize)> = if x_only {
@@ -80,7 +80,15 @@ fn find_word_in_grid(grid: &Vec<Vec<char>>, word: &str, x_only: bool) -> usize {
     count
 }
 
-fn check_word(grid: &Vec<Vec<char>>, word: &str, x: usize, y: usize, dx: isize, dy: isize, word_len: usize) -> bool {
+fn check_word(
+    grid: &[Vec<char>],
+    word: &str,
+    x: usize,
+    y: usize,
+    dx: isize,
+    dy: isize,
+    word_len: usize,
+) -> bool {
     let rows = grid.len() as isize;
     let cols = grid[0].len() as isize;
 
